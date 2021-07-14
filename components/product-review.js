@@ -50,7 +50,7 @@ Vue.component("product-review", {
           review: this.review,
           rating: this.rating,
         };
-        this.$emit("review-submitted", productReview);
+        globalEventDelivery.$emit("review-submitted", productReview);
         this.name = null;
         this.review = null;
         this.rating = null;

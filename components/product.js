@@ -35,18 +35,7 @@ Vue.component("product", {
             Add to cart
           </button>         
         </div>
-        <div>
-          <h2>Reviews</h2>
-          <p v-show='reviews.length === 0'>There is no review</p>
-          <ul>
-            <li v-for='review in reviews'>
-              <p>{{review.name}}</p>
-              <p>{{review.rating}}</p>
-              <p>{{review.review}}</p>
-            </li>
-          </ul>
-        </div>
-        <product-review v-on:review-submitted='addReview'></product-review>
+        <product-tabs v-bind:reviews='reviews'></product-tabs>        
       </div>
     `,
   data() {
@@ -84,9 +73,9 @@ Vue.component("product", {
     updateProduct(index) {
       this.selectedVariant = index;
     },
-    addReview(productReview) {
-      this.reviews.push(productReview);
-    },
+    // addReview(productReview) {
+    //   this.reviews.push(productReview);
+    // },
   },
   computed: {
     title() {
@@ -104,5 +93,10 @@ Vue.component("product", {
       }
       return "2.99";
     },
+  },
+  mounted() {
+    globalEventDelivery.$on("review-submitted", (productReview) => {
+      this.reviews.push(productReview);
+    });
   },
 });
